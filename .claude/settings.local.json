@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint:*)",
+      "WebSearch",
+      "Bash(npx ts-node:*)",
+      "Bash(npx tsx:*)",
+      "Bash(supabase --version:*)",
+      "Bash(node -e:*)",
+      "Bash(\"C:/dev/it-interview-questions/supabase/seed.ts\":*)",
+      "Bash(python3:*)",
+      "Bash(git -C \"C:/dev/it-interview-questions\" log --oneline -3)",
+      "Bash(git -C \"C:/dev/it-interview-questions\" status supabase/seed.ts)",
+      "Bash(node:*)",
+      "Bash(printf:*)"
+    ]
+  }
+}
