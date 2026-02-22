@@ -16,11 +16,7 @@ export default function ReportButton({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
-  const [form, setForm] = useState({
-    company: "",
-    level: "",
-    country: "",
-  });
+  const [level, setLevel] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -29,9 +25,7 @@ export default function ReportButton({
     await Promise.all([
       supabase.from("interview_reports").insert({
         question_id: questionId,
-        company: form.company || "Unknown",
-        level: form.level || "Unknown",
-        country: form.country || "Unknown",
+        level: level || "Unknown",
       }),
       supabase.rpc("increment_interview_count", { q_id: questionId }),
     ]);
@@ -70,23 +64,9 @@ export default function ReportButton({
       <div className="flex flex-col gap-3">
         <input
           type="text"
-          placeholder={strings.company}
-          value={form.company}
-          onChange={(e) => setForm({ ...form, company: e.target.value })}
-          className={inputClass}
-        />
-        <input
-          type="text"
           placeholder={strings.level}
-          value={form.level}
-          onChange={(e) => setForm({ ...form, level: e.target.value })}
-          className={inputClass}
-        />
-        <input
-          type="text"
-          placeholder={strings.country}
-          value={form.country}
-          onChange={(e) => setForm({ ...form, country: e.target.value })}
+          value={level}
+          onChange={(e) => setLevel(e.target.value)}
           className={inputClass}
         />
         <div className="flex gap-2">

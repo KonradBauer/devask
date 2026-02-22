@@ -11,9 +11,7 @@ export type QuestionStrings = {
   reported: string;
   gotThis: string;
   reportTitle: string;
-  company: string;
   level: string;
-  country: string;
   submitting: string;
   submit: string;
   cancel: string;
@@ -33,20 +31,16 @@ export type AddQuestionStrings = {
   junior: string;
   mid: string;
   senior: string;
-  company: string;
-  companyPlaceholder: string;
-  country: string;
-  countryPlaceholder: string;
   level: string;
   levelPlaceholder: string;
   submitting: string;
   submit: string;
+  hint: string;
   success: string;
 };
 
 export type SearchStrings = {
   placeholder: string;
-  company: string;
 };
 
 function plQ(n: number): string {
@@ -67,7 +61,7 @@ export const dict = {
     },
     langSwitch: "PL",
     home: {
-      headline: "Real IT Interview Questions",
+      headline: "Real DevAsk",
       subtitle:
         "Browse hundreds of questions asked in real interviews. Filter by technology, report questions you got, and contribute your own.",
       technologies: "Technologies",
@@ -93,9 +87,7 @@ export const dict = {
       reported: "reported",
       gotThis: "I got this question in an interview",
       reportTitle: "Report this question",
-      company: "Company (e.g. Google)",
       level: "Level (e.g. Senior, L5)",
-      country: "Country (e.g. USA)",
       submitting: "Submitting...",
       submit: "Submit Report",
       cancel: "Cancel",
@@ -121,31 +113,27 @@ export const dict = {
       junior: "Junior",
       mid: "Mid",
       senior: "Senior",
-      company: "Company",
-      companyPlaceholder: "e.g. Google",
-      country: "Country",
-      countryPlaceholder: "e.g. USA",
       level: "Level",
       levelPlaceholder: "e.g. L5, Senior, Staff",
       submitting: "Submitting...",
       submit: "Submit Question",
-      success: "Question submitted for review!",
+      hint: "Please share real questions with detailed answers — you're helping thousands of developers prepare for interviews.",
+      success: "Thank you on behalf of all developers! Your question has been submitted for review and will soon help others prepare.",
     } satisfies AddQuestionStrings,
     footer: {
       copy: (year: number) =>
-        `© ${year} IT Interview Questions. Open-source project.`,
+        `© ${year} DevAsk. All rights reserved.`,
       about: "About",
       recent: "Recent",
       addQuestion: "Add Question",
     },
     search: {
       placeholder: "Search questions...",
-      company: "Company",
     } satisfies SearchStrings,
     about: {
-      title: "About IT Interview Questions",
+      title: "About DevAsk",
       intro:
-        "IT Interview Questions is a free, open platform where developers share real interview questions they encountered. No login required — just browse, learn, and contribute.",
+        "DevAsk is a free, open platform where developers share real interview questions they encountered. No login required — just browse, learn, and contribute.",
       howItWorks: "How it works",
       howItWorksList: [
         "Browse questions by technology (React, JavaScript, Python, Java, System Design, and more)",
@@ -199,9 +187,7 @@ export const dict = {
       reported: "zgłoszeń",
       gotThis: "Dostałem to pytanie na rozmowie kwalifikacyjnej",
       reportTitle: "Zgłoś pytanie",
-      company: "Firma (np. Google)",
       level: "Poziom (np. Senior, L5)",
-      country: "Kraj (np. Polska)",
       submitting: "Wysyłanie...",
       submit: "Wyślij zgłoszenie",
       cancel: "Anuluj",
@@ -227,31 +213,27 @@ export const dict = {
       junior: "Junior",
       mid: "Mid",
       senior: "Senior",
-      company: "Firma",
-      companyPlaceholder: "np. Google",
-      country: "Kraj",
-      countryPlaceholder: "np. Polska",
       level: "Poziom",
       levelPlaceholder: "np. L5, Senior, Staff",
       submitting: "Wysyłanie...",
       submit: "Dodaj pytanie",
-      success: "Pytanie zostało zgłoszone do weryfikacji!",
+      hint: "Podawaj prawdziwe pytania i szczegółowe odpowiedzi — pomagasz tysiącom programistów lepiej przygotować się do rozmów rekrutacyjnych.",
+      success: "Dziękujemy w imieniu wszystkich programistów! Twoje pytanie zostało zgłoszone do weryfikacji i wkrótce pomoże innym w przygotowaniach.",
     } satisfies AddQuestionStrings,
     footer: {
       copy: (year: number) =>
-        `© ${year} IT Interview Questions. Projekt open-source.`,
+        `© ${year} DevAsk. Wszelkie prawa zastrzeżone.`,
       about: "O projekcie",
       recent: "Najnowsze",
       addQuestion: "Dodaj pytanie",
     },
     search: {
       placeholder: "Szukaj pytań...",
-      company: "Firma",
     } satisfies SearchStrings,
     about: {
-      title: "O IT Interview Questions",
+      title: "O DevAsk",
       intro:
-        "IT Interview Questions to darmowa, otwarta platforma, na której programiści dzielą się prawdziwymi pytaniami rekrutacyjnymi. Żadnego logowania — przeglądaj, ucz się i dodawaj pytania.",
+        "DevAsk to darmowa, otwarta platforma, na której programiści dzielą się prawdziwymi pytaniami rekrutacyjnymi. Żadnego logowania — przeglądaj, ucz się i dodawaj pytania.",
       howItWorks: "Jak to działa",
       howItWorksList: [
         "Przeglądaj pytania według technologii (React, JavaScript, Python, Java, System Design i więcej)",
@@ -268,6 +250,23 @@ export const dict = {
       techStack: "Stack technologiczny",
       techStackText:
         "Zbudowany z Next.js, TailwindCSS i Supabase. Wdrożony na Vercel.",
+    },
+    admin: {
+      title: "Panel administracyjny",
+      passwordLabel: "Hasło",
+      passwordPlaceholder: "Wpisz hasło admina",
+      login: "Zaloguj",
+      logout: "Wyloguj",
+      pending: "Pytania oczekujące",
+      noPending: "Brak pytań do weryfikacji.",
+      approve: "Zatwierdź",
+      reject: "Odrzuć",
+      approved: "Zatwierdzono!",
+      rejected: "Odrzucono!",
+      wrongPassword: "Nieprawidłowe hasło",
+      technology: "Technologia",
+      difficulty: "Trudność",
+      answer: "Odpowiedź",
     },
   },
 };

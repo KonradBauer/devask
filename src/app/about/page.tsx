@@ -5,7 +5,7 @@ import { dict } from "@/lib/i18n";
 export const metadata = createMetadata({
   title: "O projekcie",
   description:
-    "Dowiedz się więcej o IT Interview Questions — darmowej, otwartej platformie do dzielenia się pytaniami rekrutacyjnymi.",
+    "Dowiedz się więcej o DevAsk — darmowej, otwartej platformie do dzielenia się pytaniami rekrutacyjnymi.",
   path: "/about",
 });
 

@@ -12,7 +12,6 @@ type SearchResult = {
   slug: string;
   title: string;
   technology_name: string;
-  company: string | null;
   difficulty: string;
 };
 
@@ -42,9 +41,9 @@ export default function SearchBar({
     setLoading(true);
     supabase
       .from("questions")
-      .select("id, slug, title, technology_name, company, difficulty")
+      .select("id, slug, title, technology_name, difficulty")
       .eq("status", "approved")
-      .or(`title.ilike.%${debouncedQuery}%,company.ilike.%${debouncedQuery}%`)
+      .ilike("title", `%${debouncedQuery}%`)
       .limit(8)
       .then(({ data }) => {
         setResults(data ?? []);
@@ -157,9 +156,6 @@ export default function SearchBar({
                       </span>
                       <span className="text-xs text-muted">
                         {r.technology_name}
-                        {r.company && (
-                          <> &middot; {strings.company}: {r.company}</>
-                        )}
                       </span>
                     </button>
                   </li>

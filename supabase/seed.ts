@@ -1,6 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
 import * as dotenv from "dotenv";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, "../.env.local") });
 
@@ -38,8 +42,6 @@ function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const companies = ["Google", "Meta", "Amazon", "Microsoft", "Apple", "Netflix", "Stripe", "Allegro", "CD Projekt", null];
-const countries = ["Polska", "USA", "Niemcy", "UK", null];
 const levels = ["L3", "L4", "L5", "L6", "Staff", null];
 
 const technologies = [
@@ -373,8 +375,19 @@ async function seed() {
     if (error) console.error(`Tech ${tech.slug}:`, error.message);
   }
 
+  const { data: techRows } = await supabase.from("technologies").select("id, slug");
+  const slugToId: Record<string, string> = {};
+  for (const t of techRows ?? []) {
+    slugToId[t.slug] = t.id;
+  }
+
   console.log("Seeding questions...");
   for (const tech of technologies) {
+    const techId = slugToId[tech.slug];
+    if (!techId) {
+      console.error(`No ID for ${tech.slug}, skipping`);
+      continue;
+    }
     const questions = questionsMap[tech.slug] ?? [];
     for (const q of questions) {
       const slug = slugify(q.title);
@@ -383,11 +396,10 @@ async function seed() {
         title: q.title,
         answer: q.answer,
         difficulty: q.difficulty,
+        technology_id: techId,
         technology_slug: tech.slug,
         technology_name: tech.name,
         interview_count: randomInt(1, 80),
-        company: randomFrom(companies),
-        country: randomFrom(countries),
         level: randomFrom(levels),
         status: "approved",
       };

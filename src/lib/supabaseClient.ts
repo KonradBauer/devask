@@ -29,8 +29,6 @@ export type Question = {
   difficulty: "junior" | "mid" | "senior";
   interview_count: number;
   status: "approved" | "pending";
-  company: string | null;
-  country: string | null;
   level: string | null;
   created_at: string;
 };
@@ -38,8 +36,6 @@ export type Question = {
 export type InterviewReport = {
   id: string;
   question_id: string;
-  company: string;
   level: string;
-  country: string;
   created_at: string;
 };

@@ -38,7 +38,6 @@ export default function QuestionCard({
       </h3>
       <div className="flex items-center gap-3 text-xs text-muted">
         <span>{question.interview_count} zgłoszeń</span>
-        {question.company && <span>&middot; {question.company}</span>}
       </div>
     </Link>
   );

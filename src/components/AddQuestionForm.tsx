@@ -21,8 +21,6 @@ export default function AddQuestionForm({
     title: "",
     answer: "",
     difficulty: "mid" as "junior" | "mid" | "senior",
-    company: "",
-    country: "",
     level: "",
   });
 
@@ -63,8 +61,6 @@ export default function AddQuestionForm({
       slug,
       answer: form.answer,
       difficulty: form.difficulty,
-      company: form.company || null,
-      country: form.country || null,
       level: form.level || null,
       interview_count: 0,
       status: "pending",
@@ -84,8 +80,6 @@ export default function AddQuestionForm({
       title: "",
       answer: "",
       difficulty: "mid",
-      company: "",
-      country: "",
       level: "",
     });
   }
@@ -105,6 +99,10 @@ export default function AddQuestionForm({
           {error}
         </div>
       )}
+
+      <div className="rounded-lg bg-primary/10 px-4 py-3 text-sm text-primary">
+        {strings.hint}
+      </div>
 
       <div className="flex flex-col gap-1.5">
         <label className="text-sm font-medium text-foreground">
@@ -168,32 +166,6 @@ export default function AddQuestionForm({
             <option value="mid">{strings.mid}</option>
             <option value="senior">{strings.senior}</option>
           </select>
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-foreground">
-            {strings.company}
-          </label>
-          <input
-            type="text"
-            value={form.company}
-            onChange={(e) => update("company", e.target.value)}
-            placeholder={strings.companyPlaceholder}
-            className={inputClass}
-          />
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-foreground">
-            {strings.country}
-          </label>
-          <input
-            type="text"
-            value={form.country}
-            onChange={(e) => update("country", e.target.value)}
-            placeholder={strings.countryPlaceholder}
-            className={inputClass}
-          />
         </div>
 
         <div className="flex flex-col gap-1.5">

@@ -90,11 +90,6 @@ export default async function QuestionPage({ params }: Props) {
               <span className="text-xs text-muted">
                 {question.interview_count} {t.question.reported}
               </span>
-              {question.company && (
-                <span className="text-xs text-muted">
-                  &middot; {question.company}
-                </span>
-              )}
             </div>
 
             <h1 className="text-2xl font-bold leading-tight sm:text-3xl">
