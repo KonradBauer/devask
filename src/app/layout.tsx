@@ -17,8 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Pytania rekrutacyjne IT — Prawdziwe pytania z rozmów kwalifikacyjnych",
-  description:
-      "Przeglądaj setki prawdziwych pytań rekrutacyjnych IT według technologii.",
+  description: "Przeglądaj setki prawdziwych pytań rekrutacyjnych IT według technologii.",
   metadataBase: new URL("https://it-interview-questions.vercel.app"),
 };
 
@@ -29,18 +28,18 @@ export default function RootLayout({
 }) {
   return (
       <html lang="pl" className="dark">
+      <head>
+        {/* ✅ Google AdSense w <head> dla weryfikacji */}
+        <Script
+            async
+            strategy="beforeInteractive"
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5212047673129858"
+            crossOrigin="anonymous"
+        />
+      </head>
       <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-background text-foreground`}
       >
-
-      {/* ✅ Google AdSense */}
-      <Script
-          async
-          strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5212047673129858"
-          crossOrigin="anonymous"
-      />
-
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
