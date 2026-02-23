@@ -43,7 +43,7 @@ export default function SearchBar({
       .from("questions")
       .select("id, slug, title, technology_name, difficulty")
       .eq("status", "approved")
-      .ilike("title", `%${debouncedQuery}%`)
+      .or(`title.ilike.%${debouncedQuery}%,answer.ilike.%${debouncedQuery}%`)
       .limit(8)
       .then(({ data }) => {
         setResults(data ?? []);

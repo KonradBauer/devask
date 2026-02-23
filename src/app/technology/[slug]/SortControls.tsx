@@ -15,8 +15,8 @@ export default function SortControls({
   const pathname = usePathname();
 
   const options = [
-    { value: "newest", label: labels.newest },
     { value: "most-asked", label: labels.mostAsked },
+    { value: "newest", label: labels.newest },
     { value: "difficulty", label: labels.difficulty },
   ];
 

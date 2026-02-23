@@ -55,7 +55,7 @@ export default async function TechnologyPage({
   searchParams,
 }: Props) {
   const { slug } = await params;
-  const { sort = "newest" } = await searchParams;
+  const { sort = "most-asked" } = await searchParams;
 
   const t = dict.pl;
 
