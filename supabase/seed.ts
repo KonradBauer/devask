@@ -364,6 +364,10 @@ const questionsMap: Record<string, RawQuestion[]> = {
 };
 
 async function seed() {
+  console.log("Clearing old questions...");
+  await supabase.from("interview_reports").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+  await supabase.from("questions").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+
   console.log("Seeding technologies...");
   for (const tech of technologies) {
     const questionsForTech = questionsMap[tech.slug] ?? [];

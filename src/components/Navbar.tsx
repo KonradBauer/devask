@@ -22,8 +22,23 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
-        <Link href="/" className="shrink-0 text-lg font-bold text-foreground">
-          DevAsk
+        <Link href="/" className="group flex shrink-0 items-center gap-2.5">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="transition-transform group-hover:scale-105"
+          >
+            <rect x="2" y="2" width="28" height="28" rx="8" className="fill-primary" />
+            <path
+              d="M10 12.5C10 11.12 11.12 10 12.5 10H16C18.21 10 20 11.79 20 14C20 15.86 18.72 17.42 17 17.87V18H15V16H16C17.1 16 18 15.1 18 14C18 12.9 17.1 12 16 12H12.5C12.22 12 12 12.22 12 12.5V19.5C12 19.78 12.22 20 12.5 20H14V22H12.5C11.12 22 10 20.88 10 19.5V12.5Z"
+              className="fill-white"
+            />
+            <circle cx="21" cy="21" r="2" className="fill-white/80" />
+          </svg>
+          <span className="text-lg font-bold text-foreground">DevAsk</span>
         </Link>
 
         {mobileSearch ? (
