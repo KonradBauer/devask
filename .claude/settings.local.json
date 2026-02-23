@@ -16,7 +16,9 @@
       "Bash(git -C \"C:/dev/it-interview-questions\" log --oneline -3)",
       "Bash(git -C \"C:/dev/it-interview-questions\" status supabase/seed.ts)",
       "Bash(node:*)",
-      "Bash(printf:*)"
+      "Bash(printf:*)",
+      "Bash(cd /c/dev/it-interview-questions && npx vercel --version 2>&12)",
+      "Bash(cd /c/dev/it-interview-questions && npx vercel --prod 2>&1)"
     ]
   }
 }

@@ -1,15 +1,20 @@
 import { notFound } from "next/navigation";
 import { supabase, type Question } from "@/lib/supabaseClient";
+
+export const revalidate = 3600;
 import { createMetadata, technologyJsonLd } from "@/lib/seo";
 import { dict } from "@/lib/i18n";
 import { techIconMap } from "@/lib/techIcons";
 import QuestionCard from "@/components/QuestionCard";
 import AdComponent from "@/components/AdComponent";
+import Pagination from "@/components/Pagination";
 import SortControls from "./SortControls";
+import DifficultyFilter from "./DifficultyFilter";
+import ExportButton from "./ExportButton";
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ sort?: string }>;
+  searchParams: Promise<{ sort?: string; difficulty?: string; page?: string }>;
 };
 
 export async function generateMetadata({ params }: Props) {
@@ -55,23 +60,36 @@ export default async function TechnologyPage({
   searchParams,
 }: Props) {
   const { slug } = await params;
-  const { sort = "most-asked" } = await searchParams;
+  const { sort = "most-asked", difficulty, page: pageParam } = await searchParams;
 
   const t = dict.pl;
 
+  const difficultyFilter = difficulty ? difficulty.split(",") : [];
+  const currentPage = Math.max(1, parseInt(pageParam ?? "1", 10));
+  const perPage = 20;
+
   const [techResult, questionsResult] = await Promise.all([
     supabase.from("technologies").select("*").eq("slug", slug).single(),
-    supabase
-      .from("questions")
-      .select("*")
-      .eq("technology_slug", slug)
-      .eq("status", "approved"),
+    (() => {
+      let q = supabase
+        .from("questions")
+        .select("*", { count: "exact" })
+        .eq("technology_slug", slug)
+        .eq("status", "approved");
+      if (difficultyFilter.length > 0 && difficultyFilter.length < 3) {
+        q = q.in("difficulty", difficultyFilter);
+      }
+      return q;
+    })(),
   ]);
 
   const tech = techResult.data;
   if (!tech) notFound();
 
-  const questions = sortQuestions(questionsResult.data ?? [], sort);
+  const allQuestions = sortQuestions(questionsResult.data ?? [], sort);
+  const totalCount = questionsResult.count ?? allQuestions.length;
+  const totalPages = Math.ceil(totalCount / perPage);
+  const questions = allQuestions.slice((currentPage - 1) * perPage, currentPage * perPage);
   const jsonLd = technologyJsonLd({
     name: tech.name,
     slug: tech.slug,
@@ -102,6 +120,8 @@ export default async function TechnologyPage({
       </div>
 
       <SortControls current={sort} labels={t.sort} />
+      <DifficultyFilter current={difficultyFilter} />
+      <ExportButton techName={tech.name} questions={allQuestions} />
 
       <div className="grid gap-10 lg:grid-cols-[1fr_300px]">
         <div className="flex flex-col gap-3">
@@ -116,6 +136,9 @@ export default async function TechnologyPage({
               {(i + 1) % 5 === 0 && <AdComponent size="inline" className="mt-3" />}
             </div>
           ))}
+          {totalPages > 1 && (
+            <Pagination currentPage={currentPage} totalPages={totalPages} />
+          )}
         </div>
 
         <AdComponent size="sidebar" />

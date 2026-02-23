@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import type { Technology } from "@/lib/supabaseClient";
 import { techIconMap } from "@/lib/techIcons";
 import { dict } from "@/lib/i18n";
+import { trackEvent } from "@/lib/analytics";
 
 export default function TechnologyCard({
   tech,
@@ -14,6 +17,7 @@ export default function TechnologyCard({
   return (
     <Link
       href={`/technology/${tech.slug}`}
+      onClick={() => trackEvent("technology_open", { technology: tech.name })}
       className="group flex flex-col items-center gap-3 rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/50 hover:bg-card-hover"
     >
       {Icon ? (

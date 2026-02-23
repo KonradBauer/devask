@@ -3,6 +3,7 @@ import { dict } from "@/lib/i18n";
 
 export default function Footer() {
   const t = dict.pl.footer;
+  const nav = dict.pl.nav;
 
   return (
     <footer className="border-t border-border bg-background">
@@ -14,6 +15,9 @@ export default function Footer() {
           </Link>
           <Link href="/recent" className="transition-colors hover:text-foreground">
             {t.recent}
+          </Link>
+          <Link href="/stats" className="transition-colors hover:text-foreground">
+            {nav.stats}
           </Link>
           <Link href="/add-question" className="transition-colors hover:text-foreground">
             {t.addQuestion}

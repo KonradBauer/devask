@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { trackEvent } from "@/lib/analytics";
+import { useToast } from "@/lib/ToastContext";
 import Button from "@/components/Button";
 import type { QuestionStrings } from "@/lib/i18n";
 
@@ -13,6 +14,7 @@ export default function ReportButton({
   questionId: string;
   strings: QuestionStrings;
 }) {
+  const { showToast } = useToast();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
@@ -34,14 +36,11 @@ export default function ReportButton({
     setLoading(false);
     setDone(true);
     setOpen(false);
+    showToast(strings.thanks);
   }
 
   if (done) {
-    return (
-      <div className="rounded-lg bg-success/10 px-4 py-3 text-sm text-success">
-        {strings.thanks}
-      </div>
-    );
+    return null;
   }
 
   if (!open) {

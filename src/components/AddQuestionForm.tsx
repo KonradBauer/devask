@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { supabase, type Technology } from "@/lib/supabaseClient";
 import { trackEvent } from "@/lib/analytics";
+import { useToast } from "@/lib/ToastContext";
 import Button from "./Button";
 import type { AddQuestionStrings } from "@/lib/i18n";
 
@@ -11,17 +12,15 @@ export default function AddQuestionForm({
 }: {
   strings: AddQuestionStrings;
 }) {
+  const { showToast } = useToast();
   const [technologies, setTechnologies] = useState<Technology[]>([]);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
 
   const [form, setForm] = useState({
     technology_id: "",
     title: "",
     answer: "",
     difficulty: "mid" as "junior" | "mid" | "senior",
-    level: "",
   });
 
   useEffect(() => {
@@ -41,8 +40,13 @@ export default function AddQuestionForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    setError("");
-    setSuccess(false);
+
+    const lastSubmit = localStorage.getItem("lastQuestionSubmit");
+    if (lastSubmit && Date.now() - parseInt(lastSubmit, 10) < 600000) {
+      showToast(strings.rateLimited ?? "Odczekaj 10 minut przed dodaniem kolejnego pytania.", "error");
+      setLoading(false);
+      return;
+    }
 
     const tech = technologies.find((t) => t.id === form.technology_id);
     const slug =
@@ -61,7 +65,6 @@ export default function AddQuestionForm({
       slug,
       answer: form.answer,
       difficulty: form.difficulty,
-      level: form.level || null,
       interview_count: 0,
       status: "pending",
     });
@@ -69,18 +72,18 @@ export default function AddQuestionForm({
     setLoading(false);
 
     if (insertError) {
-      setError(insertError.message);
+      showToast(insertError.message, "error");
       return;
     }
 
     trackEvent("question_added", { technology: tech?.name ?? "" });
-    setSuccess(true);
+    localStorage.setItem("lastQuestionSubmit", String(Date.now()));
+    showToast(strings.success);
     setForm({
       technology_id: "",
       title: "",
       answer: "",
       difficulty: "mid",
-      level: "",
     });
   }
 
@@ -89,17 +92,6 @@ export default function AddQuestionForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-      {success && (
-        <div className="rounded-lg bg-success/10 px-4 py-3 text-sm text-success">
-          {strings.success}
-        </div>
-      )}
-      {error && (
-        <div className="rounded-lg bg-danger/10 px-4 py-3 text-sm text-danger">
-          {error}
-        </div>
-      )}
-
       <div className="rounded-lg bg-primary/10 px-4 py-3 text-sm text-primary">
         {strings.hint}
       </div>
@@ -151,35 +143,20 @@ export default function AddQuestionForm({
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-foreground">
-            {strings.difficulty}
-          </label>
-          <select
-            required
-            value={form.difficulty}
-            onChange={(e) => update("difficulty", e.target.value)}
-            className={inputClass}
-          >
-            <option value="junior">{strings.junior}</option>
-            <option value="mid">{strings.mid}</option>
-            <option value="senior">{strings.senior}</option>
-          </select>
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-foreground">
-            {strings.level}
-          </label>
-          <input
-            type="text"
-            value={form.level}
-            onChange={(e) => update("level", e.target.value)}
-            placeholder={strings.levelPlaceholder}
-            className={inputClass}
-          />
-        </div>
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-foreground">
+          {strings.difficulty}
+        </label>
+        <select
+          required
+          value={form.difficulty}
+          onChange={(e) => update("difficulty", e.target.value)}
+          className={inputClass}
+        >
+          <option value="junior">{strings.junior}</option>
+          <option value="mid">{strings.mid}</option>
+          <option value="senior">{strings.senior}</option>
+        </select>
       </div>
 
       <Button type="submit" disabled={loading} className="self-start">

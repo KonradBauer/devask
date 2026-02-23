@@ -23,7 +23,7 @@ export default function SearchBar({
 }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [fetchedQuery, setFetchedQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const router = useRouter();
@@ -31,25 +31,27 @@ export default function SearchBar({
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedQuery = useDebounce(query, 300);
 
+  const loading = debouncedQuery.trim().length > 0 && debouncedQuery !== fetchedQuery;
+
   useEffect(() => {
     if (!debouncedQuery.trim()) {
-      setResults([]);
-      setLoading(false);
       return;
     }
 
-    setLoading(true);
+    let cancelled = false;
     supabase
       .from("questions")
       .select("id, slug, title, technology_name, difficulty")
       .eq("status", "approved")
-      .or(`title.ilike.%${debouncedQuery}%,answer.ilike.%${debouncedQuery}%`)
+      .textSearch("search_vector", debouncedQuery, { type: "plain", config: "simple" })
       .limit(8)
       .then(({ data }) => {
+        if (cancelled) return;
         setResults(data ?? []);
-        setLoading(false);
+        setFetchedQuery(debouncedQuery);
         setActiveIndex(-1);
       });
+    return () => { cancelled = true; };
   }, [debouncedQuery]);
 
   useEffect(() => {

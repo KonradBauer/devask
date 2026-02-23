@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ToastContainer from "@/components/Toast";
+import { ToastProvider } from "@/lib/ToastContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,9 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-      <html lang="pl" className="dark">
+      <html lang="pl" data-theme="dark" suppressHydrationWarning>
       <head>
-        {/* ✅ Google AdSense w <head> dla weryfikacji */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}})()` }} />
         <Script
             async
             strategy="beforeInteractive"
@@ -41,9 +43,12 @@ export default function RootLayout({
       <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-background text-foreground`}
       >
+      <ToastProvider>
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
+      <ToastContainer />
+      </ToastProvider>
       </body>
       </html>
   );

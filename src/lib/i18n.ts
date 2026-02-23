@@ -16,6 +16,8 @@ export type QuestionStrings = {
   submit: string;
   cancel: string;
   thanks: string;
+  showAnswer?: string;
+  hideAnswer?: string;
 };
 
 export type AddQuestionStrings = {
@@ -37,6 +39,7 @@ export type AddQuestionStrings = {
   submit: string;
   hint: string;
   success: string;
+  rateLimited?: string;
 };
 
 export type SearchStrings = {
@@ -58,6 +61,7 @@ export const dict = {
       recent: "Recent",
       about: "About",
       addQuestion: "Add Question",
+      stats: "Stats",
     },
     langSwitch: "PL",
     home: {
@@ -68,6 +72,7 @@ export const dict = {
       mostAsked: "Most Asked",
       recentlyAdded: "Recently Added",
       viewAll: "View all",
+      questionOfDay: "Question of the Day",
     },
     technologyCard: (n: number) => `${n} question${n !== 1 ? "s" : ""}`,
     technology: {
@@ -76,6 +81,8 @@ export const dict = {
       noQuestions: (name: string) =>
         `No questions yet for ${name}. Be the first to add one!`,
       more: (name: string) => `More ${name} Questions`,
+      exportMd: "Export MD",
+      exportPdf: "Print PDF",
     },
     sort: {
       newest: "Newest",
@@ -92,6 +99,8 @@ export const dict = {
       submit: "Submit Report",
       cancel: "Cancel",
       thanks: "Thanks for reporting! Your data helps others prepare.",
+      showAnswer: "Show answer",
+      hideAnswer: "Hide answer",
     } satisfies QuestionStrings,
     recent: {
       title: "Recently Added Questions",
@@ -119,6 +128,7 @@ export const dict = {
       submit: "Submit Question",
       hint: "Please share real questions with detailed answers — you're helping thousands of developers prepare for interviews.",
       success: "Thank you on behalf of all developers! Your question has been submitted for review and will soon help others prepare.",
+      rateLimited: "Please wait 10 minutes before submitting another question.",
     } satisfies AddQuestionStrings,
     footer: {
       copy: (year: number) =>
@@ -151,6 +161,26 @@ export const dict = {
       techStackText:
         "Built with Next.js, TailwindCSS, and Supabase. Deployed on Vercel.",
     },
+    stats: {
+      title: "Statistics",
+      byDifficulty: "By difficulty",
+      byTechnology: "By technology",
+      questions: "questions total",
+    },
+    difficulty: {
+      heading: "Interview questions",
+      count: (n: number) => `${n} question${n !== 1 ? "s" : ""}`,
+    },
+    filter: {
+      difficulty: "Difficulty",
+      all: "All",
+    },
+    toast: {
+      reportSent: "Report sent!",
+      questionAdded: "Question submitted!",
+      error: "Something went wrong.",
+      rateLimited: "Please wait 10 minutes.",
+    },
   },
   pl: {
     nav: {
@@ -158,6 +188,7 @@ export const dict = {
       recent: "Najnowsze",
       about: "O projekcie",
       addQuestion: "Dodaj pytanie",
+      stats: "Statystyki",
     },
     langSwitch: "EN",
     home: {
@@ -168,6 +199,7 @@ export const dict = {
       mostAsked: "Najczęściej zadawane",
       recentlyAdded: "Ostatnio dodane",
       viewAll: "Zobacz wszystkie",
+      questionOfDay: "Pytanie dnia",
     },
     technologyCard: (n: number) => `${n} ${plQ(n)}`,
     technology: {
@@ -176,6 +208,8 @@ export const dict = {
       noQuestions: (name: string) =>
         `Brak pytań dla ${name}. Bądź pierwszy i dodaj pytanie!`,
       more: (name: string) => `Więcej pytań z ${name}`,
+      exportMd: "Eksport MD",
+      exportPdf: "Drukuj PDF",
     },
     sort: {
       newest: "Najnowsze",
@@ -192,6 +226,8 @@ export const dict = {
       submit: "Wyślij zgłoszenie",
       cancel: "Anuluj",
       thanks: "Dziękujemy za zgłoszenie! Twoje dane pomagają innym.",
+      showAnswer: "Pokaż odpowiedź",
+      hideAnswer: "Ukryj odpowiedź",
     } satisfies QuestionStrings,
     recent: {
       title: "Ostatnio dodane pytania",
@@ -219,6 +255,7 @@ export const dict = {
       submit: "Dodaj pytanie",
       hint: "Podawaj prawdziwe pytania i szczegółowe odpowiedzi — pomagasz tysiącom programistów lepiej przygotować się do rozmów rekrutacyjnych.",
       success: "Dziękujemy w imieniu wszystkich programistów! Twoje pytanie zostało zgłoszone do weryfikacji i wkrótce pomoże innym w przygotowaniach.",
+      rateLimited: "Odczekaj 10 minut przed dodaniem kolejnego pytania.",
     } satisfies AddQuestionStrings,
     footer: {
       copy: (year: number) =>
@@ -267,6 +304,26 @@ export const dict = {
       technology: "Technologia",
       difficulty: "Trudność",
       answer: "Odpowiedź",
+    },
+    stats: {
+      title: "Statystyki",
+      byDifficulty: "Wg trudności",
+      byTechnology: "Wg technologii",
+      questions: "pytań łącznie",
+    },
+    difficulty: {
+      heading: "Pytania rekrutacyjne",
+      count: (n: number) => `${n} ${plQ(n)}`,
+    },
+    filter: {
+      difficulty: "Trudność",
+      all: "Wszystkie",
+    },
+    toast: {
+      reportSent: "Zgłoszenie wysłane!",
+      questionAdded: "Pytanie dodane!",
+      error: "Coś poszło nie tak.",
+      rateLimited: "Odczekaj 10 minut.",
     },
   },
 };

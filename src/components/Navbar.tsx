@@ -6,6 +6,7 @@ import { HiOutlineMenu, HiOutlineX, HiOutlineSearch } from "react-icons/hi";
 import { HiOutlinePlus } from "react-icons/hi2";
 import { dict } from "@/lib/i18n";
 import SearchBar from "./SearchBar";
+import ThemeToggle from "./ThemeToggle";
 
 const t = dict.pl;
 
@@ -16,6 +17,7 @@ export default function Navbar() {
   const links = [
     { href: "/", label: t.nav.home },
     { href: "/recent", label: t.nav.recent },
+    { href: "/stats", label: t.nav.stats },
     { href: "/about", label: t.nav.about },
   ];
 
@@ -67,6 +69,7 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <ThemeToggle />
               <Link
                 href="/add-question"
                 className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-primary-hover"

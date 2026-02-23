@@ -1,11 +1,15 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
+
+export const revalidate = 3600;
 import { createMetadata, questionJsonLd } from "@/lib/seo";
 import { dict } from "@/lib/i18n";
 import QuestionCard from "@/components/QuestionCard";
 import AdComponent from "@/components/AdComponent";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import ReportButton from "./ReportButton";
+import QuestionViewTracker from "./QuestionViewTracker";
+import QuizAnswer from "./QuizAnswer";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -71,15 +75,18 @@ export default async function QuestionPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
+      <QuestionViewTracker slug={question.slug} technology={question.technology_name} />
+
       <div className="grid gap-10 lg:grid-cols-[1fr_300px]">
         <article>
           <div className="mb-6">
-            <Link
-              href={`/technology/${question.technology_slug}`}
-              className="mb-3 inline-block text-sm text-primary hover:text-primary-hover"
-            >
-              &larr; {question.technology_name}
-            </Link>
+            <Breadcrumbs
+              items={[
+                { label: "Strona główna", href: "/" },
+                { label: question.technology_name, href: `/technology/${question.technology_slug}` },
+                { label: question.title },
+              ]}
+            />
 
             <div className="mb-3 flex flex-wrap items-center gap-2">
               <span
@@ -97,14 +104,7 @@ export default async function QuestionPage({ params }: Props) {
             </h1>
           </div>
 
-          <div className="mb-8 rounded-xl border border-border bg-card p-6">
-            <h2 className="mb-3 text-sm font-semibold text-muted uppercase tracking-wider">
-              {t.question.answer}
-            </h2>
-            <div className="prose prose-invert max-w-none text-sm leading-relaxed text-foreground/90 whitespace-pre-wrap">
-              {answer}
-            </div>
-          </div>
+          <QuizAnswer answer={answer} label={t.question.answer} />
 
           <ReportButton questionId={question.id} strings={t.question} />
 

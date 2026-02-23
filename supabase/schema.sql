@@ -25,8 +25,6 @@ create table if not exists public.questions (
   difficulty       text not null check (difficulty in ('junior', 'mid', 'senior')),
   interview_count  int  not null default 0,
   status           text not null default 'pending' check (status in ('approved', 'pending')),
-  company          text,
-  country          text,
   level            text,
   created_at       timestamptz not null default now()
 );
@@ -35,13 +33,17 @@ create table if not exists public.questions (
 create table if not exists public.interview_reports (
   id          uuid primary key default gen_random_uuid(),
   question_id uuid not null references public.questions(id) on delete cascade,
-  company     text not null default '',
   level       text not null default '',
-  country     text not null default '',
   created_at  timestamptz not null default now()
 );
 
--- 4. INDEXES
+-- 4. FULL-TEXT SEARCH
+alter table public.questions add column if not exists search_vector tsvector
+  generated always as (to_tsvector('simple', coalesce(title, '') || ' ' || coalesce(answer, ''))) stored;
+
+create index if not exists idx_questions_search_vector on public.questions using gin(search_vector);
+
+-- 5. INDEXES
 create index if not exists idx_questions_technology_slug on public.questions(technology_slug);
 create index if not exists idx_questions_status          on public.questions(status);
 create index if not exists idx_questions_difficulty      on public.questions(difficulty);

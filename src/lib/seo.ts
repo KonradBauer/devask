@@ -37,12 +37,17 @@ export function questionJsonLd(question: {
 }) {
   return {
     "@context": "https://schema.org",
-    "@type": "Question",
-    name: question.title,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: question.answer,
-    },
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: question.title,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: question.answer,
+        },
+      },
+    ],
     url: `${SITE_URL}/question/${question.slug}`,
   };
 }
