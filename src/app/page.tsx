@@ -5,7 +5,6 @@ export const revalidate = 3600;
 import { dict } from "@/lib/i18n";
 import TechnologyCard from "@/components/TechnologyCard";
 import QuestionCard from "@/components/QuestionCard";
-import AdPlaceholder from "@/components/AdPlaceholder";
 
 function pickQuestionOfDay(questions: Array<{ id: string; slug: string; title: string; technology_name: string; difficulty: string; interview_count: number }>) {
   if (questions.length === 0) return null;
@@ -86,13 +85,8 @@ export default async function HomePage() {
               <h2 className="text-xl font-semibold">{t.home.mostAsked}</h2>
             </div>
             <div className="flex flex-col gap-3">
-              {topQuestions.map((q, i) => (
-                <div key={q.id}>
-                  <QuestionCard question={q} />
-                  {(i + 1) % 3 === 0 && (
-                    <AdPlaceholder className="mt-3 h-20" />
-                  )}
-                </div>
+              {topQuestions.map((q) => (
+                <QuestionCard key={q.id} question={q} />
               ))}
             </div>
           </section>
@@ -108,28 +102,16 @@ export default async function HomePage() {
               </Link>
             </div>
             <div className="flex flex-col gap-3">
-              {recentQuestions.map((q, i) => (
-                <div key={q.id}>
-                  <QuestionCard question={q} />
-                  {(i + 1) % 3 === 0 && (
-                    <AdPlaceholder className="mt-3 h-20" />
-                  )}
-                </div>
+              {recentQuestions.map((q) => (
+                <QuestionCard key={q.id} question={q} />
               ))}
             </div>
           </section>
         </div>
 
-        <aside className="hidden lg:block">
-          <div className="sticky top-20">
-            <AdPlaceholder className="h-[600px]" label="Sidebar Ad" />
-          </div>
-        </aside>
+        <aside className="hidden lg:block" />
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden">
-        <AdPlaceholder className="h-14 rounded-none" label="Mobile Ad" />
-      </div>
     </div>
   );
 }
