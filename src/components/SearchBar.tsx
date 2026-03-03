@@ -43,7 +43,7 @@ export default function SearchBar({
       .from("questions")
       .select("id, slug, title, technology_name, difficulty")
       .eq("status", "approved")
-      .textSearch("search_vector", debouncedQuery, { type: "plain", config: "simple" })
+      .ilike("title", `%${debouncedQuery}%`)
       .limit(8)
       .then(({ data }) => {
         if (cancelled) return;
