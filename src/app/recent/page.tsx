@@ -2,7 +2,6 @@ import { supabase } from "@/lib/supabaseClient";
 import { createMetadata } from "@/lib/seo";
 import { dict } from "@/lib/i18n";
 import QuestionCard from "@/components/QuestionCard";
-import AdComponent from "@/components/AdComponent";
 import Pagination from "@/components/Pagination";
 
 export const revalidate = 3600;
@@ -43,11 +42,8 @@ export default async function RecentPage({ searchParams }: Props) {
 
       <div className="grid gap-10 lg:grid-cols-[1fr_300px]">
         <div className="flex flex-col gap-3">
-          {(questions ?? []).map((q, i) => (
-            <div key={q.id}>
-              <QuestionCard question={q} />
-              {(i + 1) % 5 === 0 && <AdComponent size="inline" className="mt-3" />}
-            </div>
+          {(questions ?? []).map((q) => (
+            <QuestionCard key={q.id} question={q} />
           ))}
           {(!questions || questions.length === 0) && (
             <p className="py-10 text-center text-muted">{t.recent.empty}</p>
@@ -57,10 +53,7 @@ export default async function RecentPage({ searchParams }: Props) {
           )}
         </div>
 
-        <AdComponent size="sidebar" />
       </div>
-
-      <AdComponent size="sticky" />
     </div>
   );
 }

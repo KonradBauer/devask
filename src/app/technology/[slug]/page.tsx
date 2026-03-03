@@ -6,7 +6,6 @@ import { createMetadata, technologyJsonLd } from "@/lib/seo";
 import { dict } from "@/lib/i18n";
 import { techIconMap } from "@/lib/techIcons";
 import QuestionCard from "@/components/QuestionCard";
-import AdComponent from "@/components/AdComponent";
 import Pagination from "@/components/Pagination";
 import SortControls from "./SortControls";
 import DifficultyFilter from "./DifficultyFilter";
@@ -130,21 +129,15 @@ export default async function TechnologyPage({
               {t.technology.noQuestions(tech.name)}
             </p>
           )}
-          {questions.map((q, i) => (
-            <div key={q.id}>
-              <QuestionCard question={q} />
-              {(i + 1) % 5 === 0 && <AdComponent size="inline" className="mt-3" />}
-            </div>
+          {questions.map((q) => (
+            <QuestionCard key={q.id} question={q} />
           ))}
           {totalPages > 1 && (
             <Pagination currentPage={currentPage} totalPages={totalPages} />
           )}
         </div>
 
-        <AdComponent size="sidebar" />
       </div>
-
-      <AdComponent size="sticky" />
     </div>
   );
 }

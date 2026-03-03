@@ -5,7 +5,6 @@ export const revalidate = 3600;
 import { createMetadata, questionJsonLd } from "@/lib/seo";
 import { dict } from "@/lib/i18n";
 import QuestionCard from "@/components/QuestionCard";
-import AdComponent from "@/components/AdComponent";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ReportButton from "./ReportButton";
 import QuestionViewTracker from "./QuestionViewTracker";
@@ -108,29 +107,21 @@ export default async function QuestionPage({ params }: Props) {
 
           <ReportButton questionId={question.id} strings={t.question} />
 
-          <AdComponent size="inline" className="mt-8" />
-
           {related && related.length > 0 && (
             <section className="mt-10">
               <h2 className="mb-4 text-lg font-semibold">
                 {t.technology.more(question.technology_name)}
               </h2>
               <div className="flex flex-col gap-3">
-                {related.map((q, i) => (
-                  <div key={q.id}>
-                    <QuestionCard question={q} />
-                    {(i + 1) % 5 === 0 && <AdComponent size="inline" />}
-                  </div>
+                {related.map((q) => (
+                  <QuestionCard key={q.id} question={q} />
                 ))}
               </div>
             </section>
           )}
         </article>
 
-        <AdComponent size="sidebar" />
       </div>
-
-      <AdComponent size="sticky" />
     </div>
   );
 }
