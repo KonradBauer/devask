@@ -5,7 +5,7 @@ type Crumb = {
   href?: string;
 };
 
-const SITE_URL = "https://it-interview-questions.vercel.app";
+const SITE_URL = "https://devask-alpha.vercel.app";
 
 export default function Breadcrumbs({ items }: { items: Crumb[] }) {
   const jsonLd = {

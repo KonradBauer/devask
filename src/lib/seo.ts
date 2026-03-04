@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 const SITE_NAME = "DevAsk";
-const SITE_URL = "https://it-interview-questions.vercel.app";
+const SITE_URL = "https://devask-alpha.vercel.app";
 
 export function createMetadata(options: {
   title: string;

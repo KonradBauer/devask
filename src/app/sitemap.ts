@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { supabase } from "@/lib/supabaseClient";
 
-const SITE_URL = "https://it-interview-questions.vercel.app";
+const SITE_URL = "https://devask-alpha.vercel.app";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [techResult, questionResult] = await Promise.all([
